@@ -27,7 +27,7 @@ namespace ParticleSimulation.Rendering
             window = new RenderWindow(mode, "Particle Simulation");
             window.KeyPressed += Window_KeyPressed;
         }
-
+        /*
         public void InitShapes(List<Particle> particles)
         {
             foreach (var particle in particles)
@@ -43,19 +43,34 @@ namespace ParticleSimulation.Rendering
         {
             foreach (var particle in particles)
             {
-                shapes[particle.Id].Position = new SFML.System.Vector2f(particle.Position.X, particle.Position.Y); // Revert Y, because SFML renders Y in the opposite side for some reason.
-            }
-        }
+                var position = shapes[particle.Id].Position;
+                position.X = particle.Position.X;
+                position.Y = particle.Position.Y;
 
-        public void Update()
+                //shapes[particle.Id].Position = new SFML.System.Vector2f(particle.Position.X, particle.Position.Y);
+            }
+        }*/
+
+        public void Update(List<Particle> particles)
         {
             window.DispatchEvents();
             window.Clear();
-            
+
+            var circle = new CircleShape(3);
+
+            foreach (var particle in particles)
+            {
+                circle.Position = new SFML.System.Vector2f(particle.Position.X, particle.Position.Y);
+                circle.FillColor = particle.GetParticleData<ParticleLifeParticleData>().ParticleType.Color;
+                
+                window.Draw(circle);
+            }
+            /*
             foreach (var shape in shapes)
             {
                 window.Draw(shape.Value);
-            }
+            }*/
+
 
             // Finally, display the rendered frame on screen
             window.Display();

@@ -57,7 +57,7 @@ namespace ParticleSimulation
             var space = logicController.StartLogic();
 
             window.Run();
-            window.InitShapes(space.Particles);
+            //window.InitShapes(space.Particles);
 
             var stopwatch = new Stopwatch();
 
@@ -75,8 +75,8 @@ namespace ParticleSimulation
             {
                 stopwatch.Restart();
 
-                window.UpdateShapePositions(space.Particles);
-                window.Update();
+                //window.UpdateShapePositions(space.Particles);
+                window.Update(space.Particles);
 
                 stopwatch.Stop();
             });
