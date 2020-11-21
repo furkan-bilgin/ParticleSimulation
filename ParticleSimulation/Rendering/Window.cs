@@ -1,4 +1,5 @@
 ﻿using ParticleSimulation.Logic.Models;
+using ParticleSimulation.Logic.Models.ParticleData;
 using SFML.Graphics;
 using SFML.Window;
 using System;
@@ -33,7 +34,7 @@ namespace ParticleSimulation.Rendering
             {
                 shapes.Add(particle.Id, new CircleShape(3)
                 {
-                    FillColor = particle.ParticleType.Color
+                    FillColor = particle.GetParticleData<ParticleLifeParticleData>().ParticleType.Color
                 });
             }
         }

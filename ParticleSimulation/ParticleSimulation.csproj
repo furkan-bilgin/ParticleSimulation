@@ -42,6 +42,12 @@
     <Reference Include="Ara3D.Math3D.Standard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Ara3D.Math3D.1.0.0\lib\netstandard2.0\Ara3D.Math3D.Standard.dll</HintPath>
     </Reference>
+    <Reference Include="Cloo, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Cloo.clSharp.1.0.1\lib\netstandard2.0\Cloo.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="SFML.Audio, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SFML.Audio.2.5.0\lib\netstandard2.0\SFML.Audio.dll</HintPath>
     </Reference>
@@ -58,11 +64,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logic\Controllers\LogicController.cs" />
+    <Compile Include="Logic\Controllers\OpenCLController.cs" />
     <Compile Include="Logic\Controllers\PhysicsController.cs" />
+    <Compile Include="Logic\Controllers\PhysicsUpdaters\IPhysicsUpdater.cs" />
+    <Compile Include="Logic\Controllers\PhysicsUpdaters\ParticleLifePhysicsUpdater.cs" />
     <Compile Include="Logic\Controllers\SpaceController.cs" />
     <Compile Include="Logic\Controllers\TaskController.cs" />
     <Compile Include="Logic\Models\Particle.cs" />
     <Compile Include="Logic\Controllers\ParticleController.cs" />
+    <Compile Include="Logic\Models\ParticleData\IParticleData.cs" />
+    <Compile Include="Logic\Models\ParticleData\ParticleLifeParticleData.cs" />
+    <Compile Include="Logic\Models\ParticleInteraction.cs" />
     <Compile Include="Logic\Models\ParticleType.cs" />
     <Compile Include="Logic\Models\Physics\ParticleJobSchedule.cs" />
     <Compile Include="Logic\Models\Physics\SpaceSnapshot.cs" />

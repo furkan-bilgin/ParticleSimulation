@@ -12,14 +12,18 @@ namespace ParticleSimulation.Logic.Controllers
         public PhysicsController PhysicsController { get; private set; }
         public TaskController TaskController { get; private set; }
 
+        public SpaceConfig CurrentConfig { get; private set; }
+
         public LogicController(SpaceConfig spaceConfig)
         {
             InitSingleton(this);
 
+            CurrentConfig = spaceConfig;
+
             ParticleController = new ParticleController(spaceConfig);
             SpaceController = new SpaceController(spaceConfig);
-            PhysicsController = new PhysicsController();
-            TaskController = new TaskController();
+            PhysicsController = new PhysicsController(spaceConfig);
+            TaskController = new TaskController(spaceConfig.BatchCount);
         }
 
         public Space StartLogic()

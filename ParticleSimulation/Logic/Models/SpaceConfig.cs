@@ -8,8 +8,12 @@ namespace ParticleSimulation.Logic.Models
 {
     public class SpaceConfig
     {
-        public float MinimumParticleInteraction { get; set; }
-        public float MaximumParticleInteraction { get; set; }
+        /// Following 4 lists are about particle interactions. TODO: Detail
+        public List<float> MinimumParticleInteractions { get; set; }
+        public List<float> MaximumParticleInteractions { get; set; }
+
+        public List<float> MinimumParticleInteractionDistances { get; set; }
+        public List<float> MaximumParticleInteractionDistances { get; set; }
 
         public float MinimumInitialPositionX { get; set; }
         public float MaximumInitialPositionX { get; set; }
@@ -18,5 +22,7 @@ namespace ParticleSimulation.Logic.Models
 
         public int ParticleTypeCount { get; set; }
         public int ParticleCount { get; set; }
+
+        public int BatchCount { get; set; }
     }
 }

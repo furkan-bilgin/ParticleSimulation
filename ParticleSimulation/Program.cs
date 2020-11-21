@@ -1,9 +1,11 @@
-﻿using ParticleSimulation.Logic.Controllers;
+﻿using Newtonsoft.Json;
+using ParticleSimulation.Logic.Controllers;
 using ParticleSimulation.Rendering;
 using ParticleSimulation.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,18 +18,39 @@ namespace ParticleSimulation
         {
             var config = new Logic.Models.SpaceConfig()
             {
-                ParticleTypeCount = 6,
-                ParticleCount = 100,
+                ParticleTypeCount = 5,
+                ParticleCount = 2500,
 
-                MinimumParticleInteraction = -1,
-                MaximumParticleInteraction = 1,
+                MinimumParticleInteractions = new List<float>()
+                {
+                    1, 0, -1, 0
+                },
 
-                MinimumInitialPositionX = 150,
+                MaximumParticleInteractions = new List<float>()
+                {
+                    1, 0, 1, 0
+                },
+
+                MinimumParticleInteractionDistances = new List<float>()
+                {
+                    0, 3*3, 6*6, 8*8 
+                },
+
+                MaximumParticleInteractionDistances = new List<float>()
+                {
+                    0, 6*6, 10*10, 40*40
+                },
+
+                MinimumInitialPositionX = 50,
                 MaximumInitialPositionX = 1400,
 
-                MinimumInitialPositionY = 150,
-                MaximumInitialPositionY = 800
+                MinimumInitialPositionY = 100,
+                MaximumInitialPositionY = 900,
+
+                BatchCount = 512
             };
+
+            File.WriteAllText("config.json", JsonConvert.SerializeObject(config, Formatting.Indented));
 
             var logicController = new LogicController(config);
             var window = new Window();
@@ -45,7 +68,7 @@ namespace ParticleSimulation
                 logicController.UpdateLogic(space);
 
                 stopwatch.Stop();
-                Console.WriteLine("LogicTimer took " + stopwatch.ElapsedMilliseconds + "!");
+                Console.WriteLine(stopwatch.ElapsedMilliseconds);
             });
 
             var windowTimer = new LogicTimer(() =>
@@ -56,7 +79,6 @@ namespace ParticleSimulation
                 window.Update();
 
                 stopwatch.Stop();
-                Console.WriteLine("Windowtimer took " + stopwatch.ElapsedMilliseconds + "!");
             });
 
             logicTimer.Start();
@@ -64,7 +86,6 @@ namespace ParticleSimulation
 
             while (true)
             {
-
                 logicTimer.Update();
                 windowTimer.Update();
             }

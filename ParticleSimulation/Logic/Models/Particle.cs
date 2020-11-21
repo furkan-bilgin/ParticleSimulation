@@ -1,4 +1,5 @@
 ﻿using Ara3D;
+using ParticleSimulation.Logic.Models.ParticleData;
 
 namespace ParticleSimulation.Logic.Models
 {
@@ -7,21 +8,25 @@ namespace ParticleSimulation.Logic.Models
         public int Id { get; private set; }
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; }
+        
         public Vector2 ScheduledPosition { get; set; }
-        public ParticleType ParticleType { get; private set; }
+
+        public int BatchId { get; set; }
+
+        private IParticleData particleData { get; set; }
 
 
-        public Particle(int id, ParticleType particleType, Vector2 position)
+        public Particle(int id, Vector2 position, IParticleData particleData)
         {
             this.Id = id;
             this.Position = position;
             this.ScheduledPosition = position;
-            this.ParticleType = particleType;
+            this.particleData = particleData;
         }
 
-        public Particle Clone()
+        public T GetParticleData<T>() where T : IParticleData
         {
-            return new Particle(Id, ParticleType, Position.Add(Vector2.Zero));
+            return (T)particleData;
         }
     }
 }
