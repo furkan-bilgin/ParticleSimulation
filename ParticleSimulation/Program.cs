@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ParticleSimulation
@@ -41,11 +42,11 @@ namespace ParticleSimulation
                     0, 6*6, 10*10, 40*40
                 },
 
-                MinimumInitialPositionX = 50,
-                MaximumInitialPositionX = 1400,
+                MinimumInitialPositionX = 500,
+                MaximumInitialPositionX = 500,
 
-                MinimumInitialPositionY = 100,
-                MaximumInitialPositionY = 900,
+                MinimumInitialPositionY = 500,
+                MaximumInitialPositionY = 500,
 
                 BatchCount = 512
             };

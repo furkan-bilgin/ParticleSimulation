@@ -4,6 +4,7 @@ using ParticleSimulation.Logic.Models.ParticleData;
 using ParticleSimulation.Logic.Models.Physics;
 using ParticleSimulation.Logic.Utils;
 using ParticleSimulation.Utils;
+using System;
 using System.Linq;
 
 namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
@@ -27,7 +28,11 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
                 if (particle.Id == otherParticle.Id)
                     continue;
 
-                var sqrDistance = particle.Position.DistanceSquared(otherParticle.Position);
+                var a = particle.Position;
+                var b = otherParticle.Position;
+
+                var sqrDistance = (a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y);
+                //var sqrDistance = particle.Position.DistanceSquared(otherParticle.Position);
                 if (sqrDistance > MAXIMUM_DISTANCE)
                     continue;
 
@@ -39,9 +44,10 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
                 if (delta == Vector2.Zero || delta.IsNaN())
                 {
                     if (particle.Id > otherParticle.Id)
-                        delta = RNG.RandomBool() ? new Vector2(-1, 0) : new Vector2(-1, -1);
+                  
+                        delta = RNG.RandomBool() ? new Vector2(-1, 0) : RNG.RandomBool() ? new Vector2(-1, -1) : new Vector2(-1, 1);
                     else
-                        delta = RNG.RandomBool() ? new Vector2(1, 0) : new Vector2(1, 1);
+                        delta = RNG.RandomBool() ? new Vector2(1, 0) : RNG.RandomBool() ? new Vector2(1, 1) : new Vector2(1, -1); 
                 }
 
                 delta = delta * interactionConstant;
