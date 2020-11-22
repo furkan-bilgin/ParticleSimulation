@@ -20,7 +20,7 @@ namespace ParticleSimulation
             var config = new Logic.Models.SpaceConfig()
             {
                 ParticleTypeCount = 5,
-                ParticleCount = 2500,
+                ParticleCount = 3500,
 
                 MinimumParticleInteractions = new List<float>()
                 {
@@ -42,11 +42,11 @@ namespace ParticleSimulation
                     0, 6*6, 10*10, 40*40
                 },
 
-                MinimumInitialPositionX = 500,
-                MaximumInitialPositionX = 500,
+                MinimumInitialPositionX = 100,
+                MaximumInitialPositionX = 1400,
 
-                MinimumInitialPositionY = 500,
-                MaximumInitialPositionY = 500,
+                MinimumInitialPositionY = 100,
+                MaximumInitialPositionY = 800,
 
                 BatchCount = 512
             };
@@ -69,7 +69,7 @@ namespace ParticleSimulation
                 logicController.UpdateLogic(space);
 
                 stopwatch.Stop();
-                Console.WriteLine(stopwatch.ElapsedMilliseconds);
+                Console.WriteLine("LogicTimer took: " + stopwatch.ElapsedMilliseconds);
             });
 
             var windowTimer = new LogicTimer(() =>

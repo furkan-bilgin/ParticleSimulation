@@ -27,7 +27,7 @@ namespace ParticleSimulation.Logic.Controllers
         {
             var spaceSnapshot = new SpaceSnapshot()
             {
-                AllParticles = particles//particles.Select(x => x.Clone()).ToList()
+                AllParticles = particles.ToArray()//particles.Select(x => x.Clone()).ToList()
             };
 
             return spaceSnapshot;

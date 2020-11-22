@@ -44,10 +44,9 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
                 if (delta == Vector2.Zero || delta.IsNaN())
                 {
                     if (particle.Id > otherParticle.Id)
-                  
                         delta = RNG.RandomBool() ? new Vector2(-1, 0) : RNG.RandomBool() ? new Vector2(-1, -1) : new Vector2(-1, 1);
                     else
-                        delta = RNG.RandomBool() ? new Vector2(1, 0) : RNG.RandomBool() ? new Vector2(1, 1) : new Vector2(1, -1); 
+                        delta = RNG.RandomBool() ? new Vector2(1, 0) : RNG.RandomBool() ? new Vector2(1, 1) : new Vector2(1, -1);
                 }
 
                 delta = delta * interactionConstant;
