@@ -37,7 +37,9 @@ namespace ParticleSimulation.Logic.Controllers.ParticleControllers
             var gravityConfig = (GravityConfig)spaceConfig;
             var particle = base.CreateParticle(particleData, startPosition);
 
-            particle.Velocity = new Vector2(RNG.RandomFloat(gravityConfig.MinimumInitialVelocity, gravityConfig.MaximumInitialVelocity));
+            particle.Velocity = new Vector2(RNG.RandomFloat(gravityConfig.MinimumInitialVelocity, gravityConfig.MaximumInitialVelocity), RNG.RandomFloat(gravityConfig.MinimumInitialVelocity, gravityConfig.MaximumInitialVelocity));
+            particle.ScheduledVelocity = particle.Velocity;
+
             return particle;
         }
     }

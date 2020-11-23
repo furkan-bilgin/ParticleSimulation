@@ -62,6 +62,7 @@ namespace ParticleSimulation.Logic.Controllers
                     continue;
 
                 particle.Position = particle.ScheduledPosition; // Update particle positions
+                particle.Velocity = particle.ScheduledVelocity; 
             }
         }
     }

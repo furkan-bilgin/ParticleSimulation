@@ -33,20 +33,27 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
             var particle = schedule.Particle;
             var velocity = new Vector2();
 
+            var particleData = particleDataCache[particle.Id];
+
             foreach (var otherParticle in schedule.SpaceSnapshot.AllParticles)
             {
                 if (particle.Id == otherParticle.Id)
                     continue;
+
+                var otherParticleData = particleDataCache[otherParticle.Id];
 
                 var a = particle.Position;
                 var b = otherParticle.Position;
 
                 var sqrDistance = (a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y);
 
-                var mass1 = particleDataCache[particle.Id].Mass; // particle.GetParticleData<GravityParticleData>().Mass;
-                var mass2 = particleDataCache[otherParticle.Id].Mass; //otherParticle.GetParticleData<GravityParticleData>().Mass;
+                var mass1 = particleData.Mass; // particle.GetParticleData<GravityParticleData>().Mass;
+                var radius1 = particleData.Radius;
 
-                var force = G * mass1 * mass2 / sqrDistance;
+                var mass2 = otherParticleData.Mass; //otherParticle.GetParticleData<GravityParticleData>().Mass;
+                var radius2 = otherParticleData.Radius;
+
+                var force = G * mass1 * mass2 / sqrDistance; // Calculate Force by Newton's formula
                 var acceleration = force / mass1;
 
                 if (float.IsNaN(force))
@@ -54,11 +61,33 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
                     continue;
                 }
 
-                velocity -= (a - b).Normalize() * acceleration;
+                if (IsColliding(sqrDistance, radius1, radius2))
+                {
+                    var overlap = (radius1 + radius2) - sqrDistance.Sqrt();
+
+                    if (overlap.IsNaN())
+                        overlap = 0;
+
+                    particle.ScheduledPosition += (a - b).Normalize() * overlap; // Go back a little if we are interlapping
+                    
+                    var newVelocity = particle.Velocity.Lerp(-otherParticle.Velocity, mass2 / mass1) * (a - b).Normalize();
+                    
+                    particle.ScheduledVelocity = newVelocity;
+                }
+                else
+                {
+                    velocity -= (a - b).Normalize() * acceleration;
+                }
+
             }
 
-            particle.Velocity += velocity;
-            particle.ScheduledPosition += particle.Velocity * LogicTimer.FixedDelta;
+            particle.ScheduledVelocity += velocity;
+            particle.ScheduledPosition += particle.ScheduledVelocity * LogicTimer.DeltaTime;
+        }
+
+        private bool IsColliding(float distanceSqr, float radius1, float radius2)
+        {
+            return distanceSqr <= (radius1 + radius2) * (radius1 + radius2);
         }
     }
 }

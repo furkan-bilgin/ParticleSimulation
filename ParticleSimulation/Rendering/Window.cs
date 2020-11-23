@@ -1,4 +1,5 @@
 ﻿using ParticleSimulation.Logic.Models;
+using ParticleSimulation.Logic.Models.Configs;
 using ParticleSimulation.Logic.Models.ParticleData;
 using ParticleSimulation.Rendering.Controllers;
 using SFML.Graphics;
@@ -18,8 +19,18 @@ namespace ParticleSimulation.Rendering
         private View view;
         private Dictionary<int, CircleShape> shapes;
 
-        public Window()
+        private Font defaultFont;
+        private SpaceConfig spaceConfig;
+
+        private bool isGravityConfig;
+
+        public Window(SpaceConfig spaceConfig)
         {
+            this.spaceConfig = spaceConfig;
+
+            isGravityConfig = spaceConfig is GravityConfig;
+
+            defaultFont = new Font("arial.ttf");
             shapes = new Dictionary<int, CircleShape>();
         }
 
@@ -46,10 +57,13 @@ namespace ParticleSimulation.Rendering
 
             foreach (var particle in particles)
             {
-                circle.Radius = particle.GetParticleData<GravityParticleData>().Mass;
-                circle.Position = new SFML.System.Vector2f(particle.Position.X, particle.Position.Y);
+                if (isGravityConfig)
+                    circle.Radius = particle.GetParticleData<GravityParticleData>()?.Radius ?? 3;
+               
+                circle.Position = new Vector2f(particle.Position.X, particle.Position.Y);
                 circle.FillColor = particle.ParticleData.Color;
-                
+              
+                circle.Origin = new Vector2f(circle.GetLocalBounds().Width / 2f, circle.GetLocalBounds().Height / 2f);
                 window.Draw(circle);
             }
 

@@ -62,7 +62,7 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
             particle.Velocity = velocity.Average(particle.Velocity);
 
             particle.Velocity = particle.Velocity.Lerp(Vector2.Zero, 0.05f); // Friction
-            particle.ScheduledPosition += particle.Velocity * LogicTimer.FixedDelta * 50;
+            particle.ScheduledPosition += particle.Velocity * LogicTimer.DeltaTime * 50;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace ParticleSimulation.Logic.Models
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; set; }
         
+        public Vector2 ScheduledVelocity { get; set; }
         public Vector2 ScheduledPosition { get; set; }
 
         public int BatchId { get; set; }
@@ -26,7 +27,13 @@ namespace ParticleSimulation.Logic.Models
 
         public T GetParticleData<T>() where T : IParticleData
         {
-            return (T)ParticleData;
+            try
+            {
+                return (T)ParticleData;
+            } catch
+            {
+                return default(T);
+            }
         }
     }
 }

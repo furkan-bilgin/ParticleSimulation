@@ -87,6 +87,9 @@
     <Compile Include="Logic\Models\Physics\ParticleJobSchedule.cs" />
     <Compile Include="Logic\Models\Physics\SpaceSnapshot.cs" />
     <Compile Include="Logic\Models\Space.cs" />
+    <Compile Include="Logic\Scenes\IScene.cs" />
+    <Compile Include="Logic\Scenes\ParticleLifeScene.cs" />
+    <Compile Include="Logic\Scenes\TwoBodyCollisionScene.cs" />
     <Compile Include="Logic\Utils\RNG.cs" />
     <Compile Include="Logic\Models\Configs\SpaceConfig.cs" />
     <Compile Include="Program.cs" />

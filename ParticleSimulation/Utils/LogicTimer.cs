@@ -6,6 +6,8 @@ namespace ParticleSimulation.Utils
     public class LogicTimer
     {
         public const float FramesPerSecond = 60;
+        public static float DeltaTime = FixedDelta;
+
         public const float FixedDelta = 1.0f / FramesPerSecond;
 
         private double _accumulator;

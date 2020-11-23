@@ -21,17 +21,17 @@ namespace ParticleSimulation.Rendering.Controllers
 
         private void RenderWindow_MouseWheelScrolled(object sender, SFML.Window.MouseWheelScrollEventArgs e)
         {
-            if (zoomValue <= 0 && e.Delta <= 0)
+            if (zoomValue <= 0 && e.Delta >= 0)
             {
                 return;
             }
             
-            if (e.Delta > 0)
+            if (e.Delta < 0)
             {
                 view.Zoom(1f + SENSIVITY);
                 zoomValue += SENSIVITY;
             } 
-            else if (e.Delta < 0)
+            else if (e.Delta > 0)
             {
                 view.Zoom(1f - SENSIVITY);
                 zoomValue -= SENSIVITY;
