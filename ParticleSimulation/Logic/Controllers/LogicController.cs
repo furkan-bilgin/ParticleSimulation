@@ -1,4 +1,7 @@
-﻿using ParticleSimulation.Logic.Models;
+﻿using ParticleSimulation.Logic.Controllers.ParticleControllers;
+using ParticleSimulation.Logic.Controllers.PhysicsUpdaters;
+using ParticleSimulation.Logic.Models;
+using ParticleSimulation.Logic.Models.Configs;
 using ParticleSimulation.Utils;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,10 +22,26 @@ namespace ParticleSimulation.Logic.Controllers
             InitSingleton(this);
 
             CurrentConfig = spaceConfig;
+            IPhysicsUpdater physicsUpdater;
 
-            ParticleController = new ParticleController(spaceConfig);
+            switch (spaceConfig)
+            {
+                case ParticleLifeConfig c:
+                    ParticleController = new ParticleLifeParticleController(spaceConfig);
+                    physicsUpdater = new ParticleLifePhysicsUpdater(c);
+                    break;
+                case GravityConfig c:
+                    ParticleController = new GravityParticleController(spaceConfig);
+                    physicsUpdater = new GravityPhysicsUpdater(c);
+                    break;
+
+                default:
+                    throw new System.Exception("Unknown config type: " + spaceConfig.GetType().Name);
+            }
+
+
             SpaceController = new SpaceController(spaceConfig);
-            PhysicsController = new PhysicsController(spaceConfig);
+            PhysicsController = new PhysicsController(spaceConfig, physicsUpdater);
             TaskController = new TaskController(spaceConfig.BatchCount);
         }
 

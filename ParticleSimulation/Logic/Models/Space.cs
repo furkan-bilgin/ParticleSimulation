@@ -1,4 +1,5 @@
-﻿using ParticleSimulation.Logic.Models.Physics;
+﻿using ParticleSimulation.Logic.Models.Configs;
+using ParticleSimulation.Logic.Models.Physics;
 using System.Collections.Generic;
 
 namespace ParticleSimulation.Logic.Models

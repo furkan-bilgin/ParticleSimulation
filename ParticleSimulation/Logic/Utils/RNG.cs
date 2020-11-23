@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFML.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,11 @@ namespace ParticleSimulation.Logic.Utils
         public static T RandomElement<T>(List<T> list)
         {
             return list[random.Value.Next(0, list.Count)];
+        }
+
+        public static Color RandomColor()
+        {
+            return new Color((byte)RandomInt(50, 255), (byte)RandomInt(50, 255), (byte)RandomInt(50, 255));
         }
     }
 }

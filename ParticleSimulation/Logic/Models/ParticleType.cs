@@ -10,14 +10,12 @@ namespace ParticleSimulation.Logic.Models
         /// Key is ParticleType id
         /// </summary>
         public Dictionary<int, ParticleInteraction> ParticleInteractions { get; private set; }
-        public Color Color { get; private set; }
         public int Id { get; private set; }
 
-        public ParticleType(int id, Dictionary<int, ParticleInteraction> particleInteractions, Color color)
+        public ParticleType(int id, Dictionary<int, ParticleInteraction> particleInteractions)
         {
             this.Id = id;
             this.ParticleInteractions = particleInteractions;
-            this.Color = color;
         }
     }
 }

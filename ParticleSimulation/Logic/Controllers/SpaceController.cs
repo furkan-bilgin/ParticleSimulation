@@ -1,8 +1,7 @@
-﻿using Ara3D;
-using ParticleSimulation.Logic.Models;
+﻿using ParticleSimulation.Logic.Models;
+using ParticleSimulation.Logic.Models.Configs;
 using ParticleSimulation.Logic.Models.Physics;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace ParticleSimulation.Logic.Controllers
 {

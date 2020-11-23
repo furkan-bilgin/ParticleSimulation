@@ -1,5 +1,6 @@
 ﻿using Ara3D;
 using ParticleSimulation.Logic.Models;
+using ParticleSimulation.Logic.Models.Configs;
 using ParticleSimulation.Logic.Models.ParticleData;
 using ParticleSimulation.Logic.Models.Physics;
 using ParticleSimulation.Logic.Utils;
@@ -13,9 +14,14 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
     {
         private float MAXIMUM_DISTANCE;
 
-        public ParticleLifePhysicsUpdater(SpaceConfig config)
+        public ParticleLifePhysicsUpdater(ParticleLifeConfig config)
         {
             MAXIMUM_DISTANCE = config.MaximumParticleInteractionDistances.Last();
+        }
+
+        public void CacheParticleData(SpaceSnapshot spaceSnapshot)
+        {
+            // pass
         }
 
         public void UpdatePhysics(ParticleJobSchedule schedule)

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using ParticleSimulation.Logic.Controllers;
+using ParticleSimulation.Logic.Models.Configs;
 using ParticleSimulation.Rendering;
 using ParticleSimulation.Utils;
 using System;
@@ -17,10 +18,14 @@ namespace ParticleSimulation
     {
         static void Main(string[] args)
         {
-            var config = new Logic.Models.SpaceConfig()
+            /*
+            var config = new ParticleLifeConfig()
             {
-                ParticleTypeCount = 5,
-                ParticleCount = 3500,
+                AutoGenerateParticleData = true,
+                GeneratedParticleDataCount = 8,
+
+                ParticleTypeCount = 7,
+                ParticleCount = 1500,
 
                 MinimumParticleInteractions = new List<float>()
                 {
@@ -49,6 +54,28 @@ namespace ParticleSimulation
                 MaximumInitialPositionY = 800,
 
                 BatchCount = 512
+            };*/
+
+            var config = new GravityConfig()
+            {
+                AutoGenerateParticleData = true,
+                GeneratedParticleDataCount = 8,
+
+                ParticleCount = 1000,
+
+                MinimumInitialPositionX = 0,
+                MaximumInitialPositionX = 20000,
+
+                MinimumInitialPositionY = 0,
+                MaximumInitialPositionY = 20000,
+
+                MinimumMass = 1,
+                MaximumMass = 200,
+
+                MinimumInitialVelocity = -50,
+                MaximumInitialVelocity = 50,
+
+                BatchCount = 512
             };
 
             File.WriteAllText("config.json", JsonConvert.SerializeObject(config, Formatting.Indented));
@@ -61,34 +88,33 @@ namespace ParticleSimulation
             //window.InitShapes(space.Particles);
 
             var stopwatch = new Stopwatch();
+            var fpsStopwatch = new Stopwatch();
 
-            var logicTimer = new LogicTimer(() =>
+            var ms = new List<double>();
+            fpsStopwatch.Start();
+            var timer = new LogicTimer(() =>
             {
                 stopwatch.Restart();
 
                 logicController.UpdateLogic(space);
-
-                stopwatch.Stop();
-                Console.WriteLine("LogicTimer took: " + stopwatch.ElapsedMilliseconds);
-            });
-
-            var windowTimer = new LogicTimer(() =>
-            {
-                stopwatch.Restart();
-
-                //window.UpdateShapePositions(space.Particles);
                 window.Update(space.Particles);
 
-                stopwatch.Stop();
+
+                if (fpsStopwatch.ElapsedMilliseconds >= 1000)
+                {
+                    fpsStopwatch.Restart();
+                    Console.WriteLine("Average FPS: " + ms.Average());
+                    ms.Clear();
+                }
+
+                ms.Add(1000.0 / stopwatch.Elapsed.TotalMilliseconds);
             });
 
-            logicTimer.Start();
-            windowTimer.Start();
-
+            timer.Start();
+            
             while (true)
             {
-                logicTimer.Update();
-                windowTimer.Update();
+                timer.Update();
             }
         }
     }

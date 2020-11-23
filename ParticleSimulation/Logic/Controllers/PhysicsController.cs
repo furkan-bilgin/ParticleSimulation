@@ -1,5 +1,6 @@
 ﻿using ParticleSimulation.Logic.Controllers.PhysicsUpdaters;
 using ParticleSimulation.Logic.Models;
+using ParticleSimulation.Logic.Models.Configs;
 using ParticleSimulation.Logic.Models.Physics;
 
 namespace ParticleSimulation.Logic.Controllers
@@ -7,14 +8,21 @@ namespace ParticleSimulation.Logic.Controllers
     public class PhysicsController
     {
         private IPhysicsUpdater physicsUpdater;
+        private bool didRunCache;
 
-        public PhysicsController(SpaceConfig config)
+        public PhysicsController(SpaceConfig config, IPhysicsUpdater physicsUpdater)
         {
-            physicsUpdater = new ParticleLifePhysicsUpdater(config);
+            this.physicsUpdater = physicsUpdater;
         }
 
         public ParticleJobSchedule ScheduleParticleJob(Particle particle, Space space)
         {
+            if (!didRunCache) 
+            {
+                physicsUpdater.CacheParticleData(space.CurrentSpaceSnapshot);
+                didRunCache = true;
+            }
+
             var schedule = new ParticleJobSchedule()
             {
                 Particle = particle,

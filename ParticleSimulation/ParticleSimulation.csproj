@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,13 +67,19 @@
   <ItemGroup>
     <Compile Include="Logic\Controllers\LogicController.cs" />
     <Compile Include="Logic\Controllers\OpenCLController.cs" />
+    <Compile Include="Logic\Controllers\ParticleControllers\GravityParticleController.cs" />
+    <Compile Include="Logic\Controllers\ParticleControllers\ParticleLifeParticleController.cs" />
     <Compile Include="Logic\Controllers\PhysicsController.cs" />
+    <Compile Include="Logic\Controllers\PhysicsUpdaters\GravityPhysicsUpdater.cs" />
     <Compile Include="Logic\Controllers\PhysicsUpdaters\IPhysicsUpdater.cs" />
     <Compile Include="Logic\Controllers\PhysicsUpdaters\ParticleLifePhysicsUpdater.cs" />
     <Compile Include="Logic\Controllers\SpaceController.cs" />
     <Compile Include="Logic\Controllers\TaskController.cs" />
+    <Compile Include="Logic\Models\Configs\GravityConfig.cs" />
+    <Compile Include="Logic\Models\Configs\ParticleLifeConfig.cs" />
     <Compile Include="Logic\Models\Particle.cs" />
-    <Compile Include="Logic\Controllers\ParticleController.cs" />
+    <Compile Include="Logic\Controllers\ParticleControllers\ParticleController.cs" />
+    <Compile Include="Logic\Models\ParticleData\GravityParticleData.cs" />
     <Compile Include="Logic\Models\ParticleData\IParticleData.cs" />
     <Compile Include="Logic\Models\ParticleData\ParticleLifeParticleData.cs" />
     <Compile Include="Logic\Models\ParticleInteraction.cs" />
@@ -80,8 +88,10 @@
     <Compile Include="Logic\Models\Physics\SpaceSnapshot.cs" />
     <Compile Include="Logic\Models\Space.cs" />
     <Compile Include="Logic\Utils\RNG.cs" />
-    <Compile Include="Logic\Models\SpaceConfig.cs" />
+    <Compile Include="Logic\Models\Configs\SpaceConfig.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Rendering\Controllers\DragDropController.cs" />
+    <Compile Include="Rendering\Controllers\ZoomController.cs" />
     <Compile Include="Rendering\Window.cs" />
     <Compile Include="Utils\LogicTimer.cs" />
     <Compile Include="Utils\Singleton.cs" />

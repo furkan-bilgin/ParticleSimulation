@@ -1,6 +1,8 @@
 ﻿using ParticleSimulation.Logic.Models;
 using ParticleSimulation.Logic.Models.ParticleData;
+using ParticleSimulation.Rendering.Controllers;
 using SFML.Graphics;
+using SFML.System;
 using SFML.Window;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ namespace ParticleSimulation.Rendering
     public class Window
     {
         private RenderWindow window;
+        private View view;
         private Dictionary<int, CircleShape> shapes;
 
         public Window()
@@ -23,33 +26,16 @@ namespace ParticleSimulation.Rendering
         public void Run()
         {
             var mode = new VideoMode(1600, 900);
-            
+            view = new View(new Vector2f(mode.Width / 2, mode.Height / 2), new Vector2f(mode.Width, mode.Height));
+
             window = new RenderWindow(mode, "Particle Simulation");
+           
+            window.SetView(view);
             window.KeyPressed += Window_KeyPressed;
-        }
-        /*
-        public void InitShapes(List<Particle> particles)
-        {
-            foreach (var particle in particles)
-            {
-                shapes.Add(particle.Id, new CircleShape(3)
-                {
-                    FillColor = particle.GetParticleData<ParticleLifeParticleData>().ParticleType.Color
-                });
-            }
-        }
 
-        public void UpdateShapePositions(List<Particle> particles)
-        {
-            foreach (var particle in particles)
-            {
-                var position = shapes[particle.Id].Position;
-                position.X = particle.Position.X;
-                position.Y = particle.Position.Y;
-
-                //shapes[particle.Id].Position = new SFML.System.Vector2f(particle.Position.X, particle.Position.Y);
-            }
-        }*/
+            new DragDropController(view, window);
+            new ZoomController(view, window);
+        }
 
         public void Update(List<Particle> particles)
         {
@@ -60,29 +46,20 @@ namespace ParticleSimulation.Rendering
 
             foreach (var particle in particles)
             {
+                circle.Radius = particle.GetParticleData<GravityParticleData>().Mass;
                 circle.Position = new SFML.System.Vector2f(particle.Position.X, particle.Position.Y);
-                circle.FillColor = particle.GetParticleData<ParticleLifeParticleData>().ParticleType.Color;
+                circle.FillColor = particle.ParticleData.Color;
                 
                 window.Draw(circle);
             }
-            /*
-            foreach (var shape in shapes)
-            {
-                window.Draw(shape.Value);
-            }*/
 
-
-            // Finally, display the rendered frame on screen
             window.Display();
         }
 
-        /// <summary>
-        /// Function called when a key is pressed
-        /// </summary>
-        private void Window_KeyPressed(object sender, SFML.Window.KeyEventArgs e)
+        private void Window_KeyPressed(object sender, KeyEventArgs e)
         {
             var window = (SFML.Window.Window)sender;
-            if (e.Code == SFML.Window.Keyboard.Key.Escape)
+            if (e.Code == Keyboard.Key.Escape)
             {
                 window.Close();
             }

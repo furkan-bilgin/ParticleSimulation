@@ -13,20 +13,20 @@ namespace ParticleSimulation.Logic.Models
 
         public int BatchId { get; set; }
 
-        private IParticleData particleData { get; set; }
+        public IParticleData ParticleData { get; set; }
 
 
         public Particle(int id, Vector2 position, IParticleData particleData)
         {
-            this.Id = id;
-            this.Position = position;
-            this.ScheduledPosition = position;
-            this.particleData = particleData;
+            Id = id;
+            Position = position;
+            ScheduledPosition = position;
+            ParticleData = particleData;
         }
 
         public T GetParticleData<T>() where T : IParticleData
         {
-            return (T)particleData;
+            return (T)ParticleData;
         }
     }
 }
