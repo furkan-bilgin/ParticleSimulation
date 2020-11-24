@@ -22,7 +22,6 @@ namespace ParticleSimulation
     {
         static void Main(string[] args)
         {
-            /*
             var config = new GravityConfig()
             {
                 AutoGenerateParticleData = true,
@@ -45,16 +44,15 @@ namespace ParticleSimulation
 
                 BatchCount = 125
             };
-            */
             
-            var scene = new TwoBodyCollisionScene();
-            var config = scene.Config;
+            //var scene = new TwoBodyCollisionScene();
+            //var config = scene.Config;
             
             var logicController = new LogicController(config);
             var window = new Window(config);
             var space = logicController.StartLogic();
 
-            scene.Initialize(logicController, space);
+            //scene.Initialize(logicController, space);
             
             window.Run();
 

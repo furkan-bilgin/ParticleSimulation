@@ -13,6 +13,9 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
 {
     public class GravityPhysicsUpdater : IPhysicsUpdater
     {
+        const float G = 6.674f * (10 ^ 11);
+        static float IGNORE_SQR_DISTANCE = 500.Sqr();
+
         public GravityPhysicsUpdater(SpaceConfig config)
         {
             particleDataCache = new Dictionary<int, GravityParticleData>();
@@ -27,7 +30,6 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
             }
         }
 
-        const float G = 6.674f * (10 ^ 11);
         public void UpdatePhysics(ParticleJobSchedule schedule)
         {
             var particle = schedule.Particle;
@@ -46,6 +48,9 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
                 var b = otherParticle.Position;
 
                 var sqrDistance = (a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y);
+
+                if (sqrDistance > IGNORE_SQR_DISTANCE && otherParticleData.Mass < particleData.Mass)
+                    continue;
 
                 var mass1 = particleData.Mass; // particle.GetParticleData<GravityParticleData>().Mass;
                 var radius1 = particleData.Radius;
@@ -73,7 +78,6 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
                     // Elastic collision formula
                     var newVelocity = (( (mass1 - mass2) / (mass1 + mass2) ) * particle.ScheduledVelocity + ( (2 * mass2) / (mass1 + mass2) ) * otherParticle.Velocity );
 
-                    Console.WriteLine(newVelocity);
                     particle.ScheduledVelocity = newVelocity;
                 }
                 else
@@ -89,7 +93,7 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
 
         private bool IsColliding(float distanceSqr, float radius1, float radius2)
         {
-            return distanceSqr <= (radius1 + radius2) * (radius1 + radius2);
+            return distanceSqr <= (radius1 + radius2).Sqr();
         }
     }
 }

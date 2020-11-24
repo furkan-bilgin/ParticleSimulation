@@ -24,7 +24,7 @@ namespace ParticleSimulation.Logic.Controllers
 
                 jobs[schedule.Particle.BatchId].Add(schedule);
             }
-
+            /*
             Parallel.ForEach(jobs, (job) =>
             {
                 foreach (var schedule in job.Value)
@@ -32,8 +32,8 @@ namespace ParticleSimulation.Logic.Controllers
                     LogicController.Instance.PhysicsController.UpdateParticle(schedule);
                 }
             });
-
-            /*
+            */
+            
             var tasks = new List<Task>();
             
             for (int i = 0; i < taskCount; i++) // Start tasks
@@ -51,11 +51,6 @@ namespace ParticleSimulation.Logic.Controllers
             }
 
             Task.WaitAll(tasks.ToArray()); // Wait for tasks
-            */
-            /*Parallel.ForEach(schedules, (schedule) =>
-            {
-                LogicController.Instance.PhysicsController.UpdateParticle(schedule);
-            });*/
         }
     }
 }
