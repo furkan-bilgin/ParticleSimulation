@@ -22,18 +22,19 @@ namespace ParticleSimulation
     {
         static void Main(string[] args)
         {
+            /*
             var config = new GravityConfig()
             {
                 AutoGenerateParticleData = true,
                 GeneratedParticleDataCount = 75,
 
-                ParticleCount = 1000,
+                ParticleCount = 1500,
 
                 MinimumInitialPositionX = 0,
-                MaximumInitialPositionX = 50000,
+                MaximumInitialPositionX = 15000,
 
                 MinimumInitialPositionY = 0,
-                MaximumInitialPositionY = 50000,
+                MaximumInitialPositionY = 15000,
 
                 MinimumMass = 6,
                 MaximumMass = 50,
@@ -42,18 +43,18 @@ namespace ParticleSimulation
                 MinimumInitialVelocity = -50,
                 MaximumInitialVelocity = 50,
 
-                BatchCount = 512
+                BatchCount = 125
             };
+            */
             
-            
-            //var scene = new TwoBodyCollisionScene();
-            //var config = scene.Config;
+            var scene = new TwoBodyCollisionScene();
+            var config = scene.Config;
             
             var logicController = new LogicController(config);
             var window = new Window(config);
             var space = logicController.StartLogic();
 
-            //scene.Initialize(logicController, space);
+            scene.Initialize(logicController, space);
             
             window.Run();
 
@@ -79,9 +80,14 @@ namespace ParticleSimulation
                     ms.Clear();
                 }
 
+                stopwatch.Stop();
+
                 ms.Add(1000.0 / stopwatch.Elapsed.TotalMilliseconds);
 
-                LogicTimer.DeltaTime = 1f / (float)stopwatch.Elapsed.TotalMilliseconds;
+                LogicTimer.DeltaTime = 1f / (1000f / (float)stopwatch.Elapsed.TotalMilliseconds);
+
+                if (LogicTimer.DeltaTime < LogicTimer.FixedDelta)
+                    LogicTimer.DeltaTime = LogicTimer.FixedDelta;
             });
 
             timer.Start();

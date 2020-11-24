@@ -25,7 +25,8 @@ namespace ParticleSimulation.Logic.Controllers.ParticleControllers
 
             for (int i = 0; i < count; i++)
             {
-                var data = new GravityParticleData(RNG.RandomFloat(gravityConfig.MinimumMass, gravityConfig.MaximumMass), RNG.RandomFloat(gravityConfig.MinimumMass, gravityConfig.MaximumMass), RNG.RandomColor()); // Create particle type with it's interactions
+                var radius = RNG.RandomFloat(gravityConfig.MinimumMass, gravityConfig.MaximumMass);
+                var data = new GravityParticleData(radius, radius, RNG.RandomColor()); // Create particle type with it's interactions
                 result.Add(data);
             }
 

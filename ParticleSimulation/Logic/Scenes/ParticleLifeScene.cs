@@ -23,7 +23,7 @@ namespace ParticleSimulation.Logic.Scenes
                     GeneratedParticleDataCount = 8,
 
                     ParticleTypeCount = 7,
-                    ParticleCount = 1500,
+                    ParticleCount = 6000,
 
                     MinimumParticleInteractions = new List<float>()
                     {
@@ -51,7 +51,7 @@ namespace ParticleSimulation.Logic.Scenes
                     MinimumInitialPositionY = 100,
                     MaximumInitialPositionY = 800,
 
-                    BatchCount = 512
+                    BatchCount = 400
                 };
 
             set { return; } 

@@ -18,7 +18,7 @@ namespace ParticleSimulation.Logic.Scenes
 
         public void Initialize(LogicController logicController, Space space)
         {
-            var defaultParticleData = new GravityParticleData(5, 5, Color.Blue);
+            var defaultParticleData = new GravityParticleData(35, 5, Color.Blue);
             var otherParticleData = new GravityParticleData(35, 10, Color.Blue);
             //var specialParticle = logicController.ParticleController.CreateParticle(otherParticleData, new Vector2(45, 0));
             //specialParticle.Velocity = new Vector2(15, 0);
@@ -27,7 +27,8 @@ namespace ParticleSimulation.Logic.Scenes
             {
             //    specialParticle,
                 logicController.ParticleController.CreateParticle(defaultParticleData, new Vector2(-35, 0)),
-                logicController.ParticleController.CreateParticle(defaultParticleData, new Vector2(0, 35))
+                logicController.ParticleController.CreateParticle(defaultParticleData, new Vector2(0, 35)),
+                logicController.ParticleController.CreateParticle(defaultParticleData, new Vector2(0, -35))
             };
 
             space.Particles.AddRange(particles);

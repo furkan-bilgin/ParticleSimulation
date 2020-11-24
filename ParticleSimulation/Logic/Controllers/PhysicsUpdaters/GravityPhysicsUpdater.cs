@@ -70,8 +70,10 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
 
                     particle.ScheduledPosition += (a - b).Normalize() * overlap; // Go back a little if we are interlapping
                     
-                    var newVelocity = particle.Velocity.Lerp(-otherParticle.Velocity, mass2 / mass1) * (a - b).Normalize();
-                    
+                    // Elastic collision formula
+                    var newVelocity = (( (mass1 - mass2) / (mass1 + mass2) ) * particle.ScheduledVelocity + ( (2 * mass2) / (mass1 + mass2) ) * otherParticle.Velocity );
+
+                    Console.WriteLine(newVelocity);
                     particle.ScheduledVelocity = newVelocity;
                 }
                 else
