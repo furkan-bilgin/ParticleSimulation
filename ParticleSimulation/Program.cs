@@ -36,7 +36,7 @@ namespace ParticleSimulation
                 MaximumInitialPositionY = 15000,
 
                 MinimumMass = 6,
-                MaximumMass = 50,
+                MaximumMass = 150,
 
 
                 MinimumInitialVelocity = -50,
@@ -52,8 +52,19 @@ namespace ParticleSimulation
             var window = new Window(config);
             var space = logicController.StartLogic();
 
+            space.Particles.Add(
+                    logicController.ParticleController.CreateParticle(new GravityParticleData(1000000, 850, Color.Yellow), new Vector2(7400, 7400))
+                );
+
+            space.Particles.Add(
+                    logicController.ParticleController.CreateParticle(new GravityParticleData(1100000, 750, Color.Blue), new Vector2(9400, 7400))
+                );
+
+            space.Particles.Add(
+                    logicController.ParticleController.CreateParticle(new GravityParticleData(1100000, 950, Color.Red), new Vector2(8400, 5400))
+                );
             //scene.Initialize(logicController, space);
-            
+
             window.Run();
 
             var stopwatch = new Stopwatch();

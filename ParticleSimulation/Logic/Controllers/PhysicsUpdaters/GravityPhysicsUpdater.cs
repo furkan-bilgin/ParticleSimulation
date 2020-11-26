@@ -15,6 +15,7 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
     {
         const float G = 6.674f * (10 ^ 11);
         static float IGNORE_SQR_DISTANCE = 500.Sqr();
+        static float IGNORE_MASS = 5;
 
         public GravityPhysicsUpdater(SpaceConfig config)
         {
@@ -49,8 +50,6 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
 
                 var sqrDistance = (a.X - b.X) * (a.X - b.X) + (a.Y - b.Y) * (a.Y - b.Y);
 
-                if (sqrDistance > IGNORE_SQR_DISTANCE && otherParticleData.Mass < particleData.Mass)
-                    continue;
 
                 var mass1 = particleData.Mass; // particle.GetParticleData<GravityParticleData>().Mass;
                 var radius1 = particleData.Radius;
@@ -68,12 +67,13 @@ namespace ParticleSimulation.Logic.Controllers.PhysicsUpdaters
 
                 if (IsColliding(sqrDistance, radius1, radius2))
                 {
-                    var overlap = (radius1 + radius2) - sqrDistance.Sqrt();
+                    var overlap = radius1 + radius2 - sqrDistance.Sqrt();
 
                     if (overlap.IsNaN())
                         overlap = 0;
 
-                    particle.ScheduledPosition += (a - b).Normalize() * overlap; // Go back a little if we are interlapping
+                    if (particleData.Mass <= otherParticleData.Mass)
+                        particle.ScheduledPosition += (a - b).Normalize() * overlap; // Go back a little if we are interlapping
                     
                     // Elastic collision formula
                     var newVelocity = (( (mass1 - mass2) / (mass1 + mass2) ) * particle.ScheduledVelocity + ( (2 * mass2) / (mass1 + mass2) ) * otherParticle.Velocity );
