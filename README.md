@@ -8,7 +8,6 @@ Modes it currently has are:
 Features:
 - Is multi threaded. Splits particles into batches and procceses them in different threads.
 - Highly configurable.
-- Flexible.
 - Easy to add new modes.
 - Uses SFML.
 
